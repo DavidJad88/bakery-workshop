@@ -4,11 +4,17 @@ import MenuList from "./components/MenuList/MenuList";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 
 function App() {
-  const [cartContent, setcartContent] = useState();
+  const [addToCartButtonActive, setaddToCartButtonActive] = useState(null);
+  const [cartContent, setcartContent] = useState([]);
   return (
     <>
       <section className="listWrapper">
-        <MenuList />
+        <MenuList
+          cartContent={cartContent}
+          setCartContent={setcartContent}
+          addToCartButtonActive={addToCartButtonActive}
+          setAddToCartButtonActive={setaddToCartButtonActive}
+        />
       </section>
 
       <ShoppingCart />
