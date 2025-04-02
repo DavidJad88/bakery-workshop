@@ -31,6 +31,32 @@ const MenuItem = ({
       return updatedCart;
     });
   };
+
+  const subtractItemFromCart = () => {
+    setCartContent((prev) => {
+      // find existing item
+      const itemIndex = prev.findIndex(
+        (cartItem) => cartItem.menuItemNum === item.id
+      );
+
+      //if nonexisting, return same reference
+      if (itemIndex === -1) return prev;
+
+      //clone the specific item
+      const updatedItem = { ...prev[itemIndex], qty: prev[itemIndex].qty - 1 };
+
+      //create new cart array
+      const updatedCart = prev.map((item, i) =>
+        i === itemIndex ? updatedItem : item
+      );
+
+      // filter out items where qty is 0
+      return updatedItem.qty === 0
+        ? updatedCart.filter((_, i) => i !== itemIndex)
+        : updatedCart;
+    });
+  };
+
   return (
     <div className={styles.menuItem}>
       <img src={item.imageUrl} />
@@ -38,6 +64,7 @@ const MenuItem = ({
         <CounterButton
           itemQuantity={itemQuantity}
           addItemToCart={addItemToCart}
+          subtractItemFromCart={subtractItemFromCart}
         />
       ) : (
         <button onClick={() => setAddToCartButtonActive(item.id)}>
